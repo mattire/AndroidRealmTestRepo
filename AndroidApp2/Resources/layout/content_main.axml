@@ -13,5 +13,16 @@
 		android:layout_height="wrap_content"
 		android:layout_centerInParent="true"
 		android:text="Hello World!" />
-
+	<TextView
+		android:paddingTop="80px"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:text="Hello World!" />
+	<android.support.v7.widget.RecyclerView
+		android:minWidth="25px"
+		android:minHeight="25px"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/recyclerView1" />
 </RelativeLayout>

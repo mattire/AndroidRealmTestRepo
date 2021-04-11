@@ -48,6 +48,11 @@ namespace AndroidApp2.Database
             return cm;
         }
 
+        public IQueryable<T> Get<T>() where T: RealmObject
+        {
+            return _realm.All<T>();
+        }
+
 
     }
 }
