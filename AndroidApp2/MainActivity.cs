@@ -4,14 +4,23 @@ using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
+//using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AndroidApp2.Database;
 
 namespace AndroidApp2
 {
+    //public class MyDbObj : Realms.RealmObject
+    //{
+    //
+    //}
+
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
+        //public Android.Support.V7.Widget.RecyclerView mRecyclerView1 { get; private set; }
+        //public Android.Support.V7.Widget.LinearLayoutManager mLayoutManager { get; private set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -20,6 +29,9 @@ namespace AndroidApp2
 
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
+            //mRecyclerView1 = FindViewById<RecyclerView>(Resource.Id.recyclerView1);
+            //mLayoutManager = new LinearLayoutManager(this);
+            //mRecyclerView1.SetLayoutManager(mLayoutManager);
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
@@ -47,6 +59,11 @@ namespace AndroidApp2
             View view = (View) sender;
             Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
                 .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
+
+            UI.Input.InputTxt(this, "Enter msg", (s) => {
+                RealmDb.Instance.AddMessage(s);
+            });
+            
         }
 	}
 }
