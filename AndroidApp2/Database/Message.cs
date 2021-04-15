@@ -14,10 +14,40 @@ using Realms;
 
 namespace AndroidApp2.Database
 {
-    class Message : RealmObject
+    class Message : RealmObject, IMessage
     {
         [PrimaryKey]
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Text { get; set; }
+    }
+
+    class MessageWrpr : IMessage
+    {
+        public Message Msg { get; set; }
+
+        public string Id
+        {
+            get
+            {
+                return ((IMessage)Msg).Id;
+            }
+            set
+            {
+                ((IMessage)Msg).Id = value;
+            }
+        }
+
+        public string Text
+        {
+            get
+            {
+                return ((IMessage)Msg).Text;
+            }
+            set
+            {
+                ((IMessage)Msg).Text = value;
+            }
+        }
+
     }
 }

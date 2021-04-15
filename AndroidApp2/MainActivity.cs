@@ -21,6 +21,8 @@ namespace AndroidApp2
         public Android.Support.V7.Widget.LinearLayoutManager mLayoutManager { get; private set; }
         internal RecAdapter mAdapter { get; private set; }
 
+        public static MainActivity Current;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -36,6 +38,7 @@ namespace AndroidApp2
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
+            Current = this;
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

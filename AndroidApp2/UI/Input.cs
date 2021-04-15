@@ -14,10 +14,11 @@ namespace AndroidApp2.UI
 {
     class Input
     {
-        static public void InputTxt(Activity act, string title, Action<string> handleResp)
+        static public void InputTxt(Activity act, string title, Action<string> handleResp, string earlier = "")
         {
             //var act = MainActivity.Current;
             EditText et = new EditText(act);
+            et.Text = earlier;
             Button button = new Button(act);
             LinearLayout linearLayout = new LinearLayout(act);
             linearLayout.Orientation = Orientation.Vertical;

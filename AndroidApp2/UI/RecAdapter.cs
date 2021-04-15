@@ -14,26 +14,16 @@ using AndroidApp2.Database;
 
 namespace AndroidApp2.UI
 {
-    class RecVH : Android.Support.V7.Widget.RecyclerView.ViewHolder
-    {
-        TextView mTextView;
-
-        public RecVH(View itemView) : base(itemView)
-        {
-            MTextView = (TextView) itemView;
-        }
-
-        public TextView MTextView { get => mTextView; set => mTextView = value; }
-    }
-
-
 
     class RecAdapter : Android.Support.V7.Widget.RecyclerView.Adapter
     {
         public RecAdapter(Activity activity)
         {
             Activity = activity;
+            Current = this;
         }
+
+        public static RecAdapter Current { get; internal set; }
 
         public override int ItemCount => Messages.Count();
 
@@ -49,7 +39,8 @@ namespace AndroidApp2.UI
         {
             var msg = Messages.ElementAt(position);
             var vh = holder as RecVH;
-            vh.MTextView.Text = msg.Text;
+            vh.SetValue(msg);
+            //vh.MTextView.Text = msg.Text;
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
@@ -57,8 +48,8 @@ namespace AndroidApp2.UI
             return new RecVH(new TextView(Activity));
         }
 
-        //public void Load() {
-        //    var msgs = Database.RealmDb.Instance.Get<Database.Message>();
-        //}
+        public void Update() {
+            NotifyDataSetChanged();
+        }
     }
 }

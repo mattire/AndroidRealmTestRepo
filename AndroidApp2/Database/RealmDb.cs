@@ -23,8 +23,11 @@ namespace AndroidApp2.Database
 
         public static RealmDb Instance { get { return lazy.Value; } }
 
+        public Realm RealmInstance { get { return _realm; } }
+
         private RealmDb()
         {
+            //var mThread = System.Threading.Thread.CurrentThread;
             Init();
         }
 
@@ -39,6 +42,8 @@ namespace AndroidApp2.Database
                 var m = new Message() { Text = text };
                 _realm.Add(m);
             });
+            //AndroidApp2.UI.RecAdapter.Current.Update();
+            AndroidApp2.UI.RecAdapter.Current.NotifyDataSetChanged();
         }
 
         public Message GetMessage(string txtStartsWith)
