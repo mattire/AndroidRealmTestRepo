@@ -27,13 +27,33 @@ namespace AndroidApp2.Database
 
         private RealmDb()
         {
-            //var mThread = System.Threading.Thread.CurrentThread;
             Init();
         }
 
         public void Init() {
+            //var mThread = System.Threading.Thread.CurrentThread;
             //using (var real)
             _realm = Realm.GetInstance();
+            //_realm.Error
+            _realm.RealmChanged += _realm_RealmChanged;
+
+            //Message msg; 
+
+            IDisposable msgToken = _realm.All<Message>().SubscribeForNotifications((sender, changes, errors) =>
+            {
+                if (changes != null) {
+                    System.Diagnostics.Debug.WriteLine(changes.ModifiedIndices.Count());
+                    System.Diagnostics.Debug.WriteLine(changes.DeletedIndices.Count());
+                    System.Diagnostics.Debug.WriteLine(changes.InsertedIndices.Count());
+                    System.Diagnostics.Debug.WriteLine("");
+                }
+            });
+        }
+
+        private void _realm_RealmChanged(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(sender.GetType().Name);
+
         }
 
         public void AddMessage(string text) {
