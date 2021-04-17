@@ -12,12 +12,15 @@ using Android.Widget;
 
 using Realms;
 using RealmClone;
+using System.Threading;
 
 namespace AndroidApp2.Database
 {
     class RealmDb
     {
         private Realm _realm;
+
+        public Thread RealmThread { get; private set; }
 
         private static readonly Lazy<RealmDb> lazy = new Lazy<RealmDb>(() => new RealmDb());
 
@@ -31,9 +34,9 @@ namespace AndroidApp2.Database
         }
 
         public void Init() {
-            //var mThread = System.Threading.Thread.CurrentThread;
             //using (var real)
             _realm = Realm.GetInstance();
+            RealmThread = Thread.CurrentThread;
             //_realm.Error
             _realm.RealmChanged += _realm_RealmChanged;
 
@@ -57,13 +60,28 @@ namespace AndroidApp2.Database
         }
 
         public void AddMessage(string text) {
-            _realm.Write(() =>
+            try
             {
-                var m = new Message() { Text = text };
-                _realm.Add(m);
-            });
-            //AndroidApp2.UI.RecAdapter.Current.Update();
-            AndroidApp2.UI.RecAdapter.Current.NotifyDataSetChanged();
+                //_realm.Write(() =>
+                //var r = _realm;
+                var r = Realm.GetInstance();
+
+                //RealmThread.ExecutionContext.
+
+                r.Write(() =>
+                {
+                    var m = new Message() { Text = text };
+                    r.Add(m);
+                });
+                //AndroidApp2.UI.RecAdapter.Current.Update();
+
+                //AndroidApp2.UI.RecAdapter.Current.NotifyDataSetChanged();
+
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
         }
 
         public Message GetMessage(string txtStartsWith)

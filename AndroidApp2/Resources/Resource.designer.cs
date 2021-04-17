@@ -2399,6 +2399,9 @@ namespace AndroidApp2
 			// aapt resource value: 0x7f0800b2
 			public const int action_settings = 2131230898;
 			
+			// aapt resource value: 0x7f0800b3
+			public const int action_test = 2131230899;
+			
 			// aapt resource value: 0x7f08009e
 			public const int action_text = 2131230878;
 			

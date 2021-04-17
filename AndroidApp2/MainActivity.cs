@@ -11,6 +11,7 @@ using AndroidApp2.Database;
 using RecView = Android.Support.V7.Widget.RecyclerView;
 using LinLayMan = Android.Support.V7.Widget.LinearLayoutManager;
 using AndroidApp2.UI;
+using System.Threading.Tasks;
 
 namespace AndroidApp2
 {
@@ -54,8 +55,21 @@ namespace AndroidApp2
             {
                 return true;
             }
-
+            if (id == Resource.Id.action_test)
+            {
+                ThreadTest();
+                return true;
+            }
             return base.OnOptionsItemSelected(item);
+        }
+
+        private void ThreadTest()
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(100);
+                RealmDb.Instance.AddMessage("Test msg");
+            });
         }
 
         private void FabOnClick(object sender, EventArgs eventArgs)

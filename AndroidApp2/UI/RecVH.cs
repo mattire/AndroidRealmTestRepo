@@ -12,6 +12,20 @@ namespace AndroidApp2.UI
         {
             MTextView = (TextView) itemView;
             MTextView.Click += MTextView_Click;
+            MTextView.LongClick += MTextView_LongClick;
+        }
+
+        private void MTextView_LongClick(object sender, View.LongClickEventArgs e)
+        {
+            var r = Realms.Realm.GetInstance();
+            r.Write(() => { r.Remove(mMsg); });
+
+            //Database.RealmDb.Instance.RealmInstance.Write(() =>
+            //{
+            //    mMsg.Text = s;
+            //});
+
+            //RecAdapter.Current.NotifyDataSetChanged();
         }
 
         private TextView MTextView { get => mTextView; set => mTextView = value; }
@@ -24,7 +38,9 @@ namespace AndroidApp2.UI
 
         private void MMsg_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            MTextView.Text = mMsg.Text;
+            if (mMsg.IsValid) {
+                MTextView.Text = mMsg.Text;
+            }
         }
 
         private void MTextView_Click(object sender, System.EventArgs e)
@@ -32,7 +48,8 @@ namespace AndroidApp2.UI
             var txt = MTextView.Text;
             Input.InputTxt(MainActivity.Current, "Update msg", (s) =>
             {
-                Database.RealmDb.Instance.RealmInstance.Write(() =>
+                //Database.RealmDb.Instance.RealmInstance.Write(() =>
+                Realms.Realm.GetInstance().Write(() =>
                 {
                     mMsg.Text = s;
                 });
