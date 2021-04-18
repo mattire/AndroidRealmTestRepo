@@ -67,8 +67,19 @@ namespace AndroidApp2
         {
             Task.Run(async () =>
             {
-                await Task.Delay(100);
-                RealmDb.Instance.AddMessage("Test msg");
+                try
+                {
+                    await Task.Delay(100);
+                    //var r = RealmDb.GetRealmInstance();
+                    
+                    //RealmDb.Instance.AddMessage("Test msg");
+                    RealmDb.AddMessage("Test msg");
+
+                }
+                catch (Exception exp)
+                {
+                    System.Diagnostics.Debug.WriteLine(exp.Message);
+                }
             });
         }
 
@@ -79,7 +90,8 @@ namespace AndroidApp2
             //    .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
 
             UI.Input.InputTxt(this, "Enter msg", (s) => {
-                RealmDb.Instance.AddMessage(s);
+                //RealmDb.Instance.AddMessage(s);
+                RealmDb.AddMessage(s);
             });
             
         }

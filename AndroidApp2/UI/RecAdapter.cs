@@ -35,7 +35,7 @@ namespace AndroidApp2.UI
 
         public IQueryable<Database.Message> Messages {
             get {
-                return Realm.GetInstance().All<Database.Message>();
+                return Realm.GetInstance(RealmDb.Config).All<Database.Message>();
                 //var r = Realm.GetInstance();
                 //return r.All<Database.Message>();
                 //return Database.RealmDb.Instance.Get<Database.Message>();
@@ -59,7 +59,7 @@ namespace AndroidApp2.UI
 
         private void SubscribeMessages()
         {
-            var r = Realm.GetInstance();
+            var r = Realm.GetInstance(RealmDb.Config);
             mSubscription = r.All<DbMessage>().SubscribeForNotifications((sender, changes, errors) =>
             {
                 try

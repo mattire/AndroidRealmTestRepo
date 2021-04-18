@@ -1,5 +1,6 @@
 ﻿using Android.Views;
 using Android.Widget;
+using AndroidApp2.Database;
 
 namespace AndroidApp2.UI
 {
@@ -17,7 +18,7 @@ namespace AndroidApp2.UI
 
         private void MTextView_LongClick(object sender, View.LongClickEventArgs e)
         {
-            var r = Realms.Realm.GetInstance();
+            var r = Realms.Realm.GetInstance(RealmDb.Config);
             r.Write(() => { r.Remove(mMsg); });
 
             //Database.RealmDb.Instance.RealmInstance.Write(() =>
@@ -49,7 +50,7 @@ namespace AndroidApp2.UI
             Input.InputTxt(MainActivity.Current, "Update msg", (s) =>
             {
                 //Database.RealmDb.Instance.RealmInstance.Write(() =>
-                Realms.Realm.GetInstance().Write(() =>
+                Realms.Realm.GetInstance(RealmDb.Config).Write(() =>
                 {
                     mMsg.Text = s;
                 });

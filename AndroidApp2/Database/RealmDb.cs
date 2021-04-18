@@ -18,6 +18,8 @@ namespace AndroidApp2.Database
 {
     class RealmDb
     {
+        static public RealmConfiguration Config { get; private set; }
+
         private Realm _realm;
 
         public Thread RealmThread { get; private set; }
@@ -33,9 +35,23 @@ namespace AndroidApp2.Database
             Init();
         }
 
+        static public Realm GetRealmInstance() {
+            return Realm.GetInstance(new RealmConfiguration()
+            {
+                SchemaVersion = 1,
+                ShouldDeleteIfMigrationNeeded = true
+            });
+        }
+
         public void Init() {
             //using (var real)
-            _realm = Realm.GetInstance();
+            Config = new RealmConfiguration()
+            {
+                SchemaVersion = 1,
+                ShouldDeleteIfMigrationNeeded = true
+            };
+            //Config.
+            _realm = Realm.GetInstance(Config);
             RealmThread = Thread.CurrentThread;
             //_realm.Error
             _realm.RealmChanged += _realm_RealmChanged;
@@ -59,12 +75,12 @@ namespace AndroidApp2.Database
 
         }
 
-        public void AddMessage(string text) {
+        public static void AddMessage(string text) {
             try
             {
                 //_realm.Write(() =>
                 //var r = _realm;
-                var r = Realm.GetInstance();
+                var r = Realm.GetInstance(RealmDb.Config);
 
                 //RealmThread.ExecutionContext.
 
